@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Портфолио — лендинги под ключ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0b;
+    --card: #141416;
+    --text: #f5f5f7;
+    --muted: #8b8d95;
+    --border: rgba(255,255,255,.08);
+    --accent: #ffffff;
+    --accent-soft: #1c1c1f;
+    --radius: 18px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+  /* HEADER */
+  header {
+    padding: 28px 0;
+    position: sticky;
+    top: 0;
+    background: rgba(10,10,11,.7);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid transparent;
+    z-index: 100;
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; }
+  .logo {
+    font-weight: 800;
+    font-size: 17px;
+    letter-spacing: -.02em;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .logo-dot {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 0 4px rgba(34,197,94,.15);
+  }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14.5px;
+    font-weight: 500;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cta {
+    padding: 9px 16px;
+    border-radius: 10px;
+    background: var(--accent);
+    color: #0a0a0b;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: opacity .2s;
+  }
+  .nav-cta:hover { opacity: .85; }
+
+  /* HERO */
+  .hero { padding: 84px 0 64px; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    padding: 6px 14px;
+    border-radius: 30px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    margin-bottom: 26px;
+  }
+  .hero h1 {
+    font-size: clamp(34px, 5.5vw, 58px);
+    line-height: 1.06;
+    letter-spacing: -.035em;
+    font-weight: 800;
+    margin-bottom: 22px;
+    max-width: 820px;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--muted);
+    font-weight: 700;
+  }
+  .hero p {
+    font-size: 18px;
+    color: var(--muted);
+    max-width: 600px;
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn {
+    padding: 13px 22px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all .2s;
+    font-family: inherit;
+  }
+  .btn-primary { background: var(--accent); color: #0a0a0b; }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 10px 28px rgba(255,255,255,.15); }
+  .btn-ghost { background: transparent; color: var(--text); border: 1.5px solid var(--border); }
+  .btn-ghost:hover { border-color: var(--text); }
+
+  /* SECTION */
+  section { padding: 64px 0; }
+  .section-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+  }
+  .section-head h2 {
+    font-size: clamp(24px, 3vw, 32px);
+    letter-spacing: -.025em;
+    font-weight: 800;
+    line-height: 1.15;
+  }
+  .section-head p {
+    color: var(--muted);
+    font-size: 15px;
+    max-width: 440px;
+    margin-top: 6px;
+  }
+  .section-count {
+    font-size: 13px;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .project {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: all .3s;
+  }
+  .project:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 48px rgba(0,0,0,.5);
+    border-color: rgba(255,255,255,.14);
+  }
+
+  .project-media {
+    aspect-ratio: 16 / 10;
+    background: var(--accent-soft);
+    position: relative;
+    overflow: hidden;
+  }
+  .project-media img,
+  .project-media video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .project-media video {
+    object-position: top center;
+  }
+
+  .project-badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    background: rgba(20,20,22,.85);
+    backdrop-filter: blur(8px);
+    color: #f5f5f7;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 5px 11px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid rgba(255,255,255,.1);
+  }
+  .badge-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #ef4444;
+  }
+  .badge-dot.live {
+    background: #22c55e;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .4; }
+  }
+
+  .project-body {
+    padding: 22px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  .project-title {
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -.015em;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .project-arrow {
+    color: var(--muted);
+    font-size: 16px;
+    transition: transform .2s, color .2s;
+  }
+  .project:hover .project-arrow { color: var(--text); transform: translate(2px, -2px); }
+  .project-desc {
+    font-size: 14.5px;
+    color: var(--muted);
+    line-height: 1.55;
+    margin-bottom: 18px;
+    flex: 1;
+  }
+  .project-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .tag {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    background: var(--accent-soft);
+    padding: 4px 10px;
+    border-radius: 6px;
+    letter-spacing: -.005em;
+  }
+
+  /* SKILLS */
+  .skills { background: var(--card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .skill-card {
+    padding: 24px;
+    border-radius: 14px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+  }
+  .skill-card h4 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    letter-spacing: -.01em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .skill-card h4 span {
+    width: 24px; height: 24px;
+    border-radius: 7px;
+    background: var(--accent-soft);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+  }
+  .skill-card p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* CONTACT */
+  .contact { text-align: center; padding: 80px 0 96px; }
+  .contact h2 {
+    font-size: clamp(28px, 4vw, 42px);
+    letter-spacing: -.03em;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .contact p {
+    color: var(--muted);
+    font-size: 16px;
+    max-width: 500px;
+    margin: 0 auto 32px;
+    line-height: 1.6;
+  }
+  .contact-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 32px 0;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 820px) {
+    .projects-grid { grid-template-columns: 1fr; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .hero { padding: 56px 0 40px; }
+    section { padding: 48px 0; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <div class="logo">
+      <span class="logo-dot"></span>
+      Портфолио
+    </div>
+    <ul class="nav-links">
+      <li><a href="#projects">Работы</a></li>
+      <li><a href="#skills">Навыки</a></li>
+      <li><a href="#contact">Контакты</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Связаться</a>
+  </div>
+</header>
+
+<main>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+<div class="logo">
+      <span class="logo-dot"></span>
+       Доступен для заказов
+    </div>
+    
+    <h1>Делаю лендинги под ключ <em>за 2 дня</em></h1>
+    <p>Адаптивная вёрстка, анимации, формы заявок. Чистый HTML, CSS и JavaScript — без тяжёлых конструкторов и лишних зависимостей.</p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn btn-primary">Смотреть работы</a>
+      <a href="#contact" class="btn btn-ghost">Обсудить проект</a>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2>Избранные работы</h2>
+        <p>4 прототипа: два с видео-демо, два — скриншоты. Все свёрстаны с нуля.</p>
+      </div>
+      <span class="section-count">4 проекта</span>
+    </div>
+
+    <div class="projects-grid">
+
+      <!-- VividAI -->
+      <article class="project">
+        <div class="project-media">
+          <span class="project-badge"><span class="badge-dot live"></span>Видео-демо</span>
+          <video muted autoplay loop playsinline preload="metadata">
+            <source src="videos/ai_video_compressed.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="project-body">
+          <h3 class="project-title">
+            VividAI
+            <span class="project-arrow">↗</span>
+          </h3>
+          <p class="project-desc">Лендинг AI-стартапа — замена Claude Opus. Тёмная тема, живые бенчмарки, анимированное демо-окно чата, тарифы.</p>
+          <div class="project-tags">
+            <span class="tag">HTML</span>
+            <span class="tag">CSS</span>
+            <span class="tag">JS</span>
+            <span class="tag">Dark UI</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- ДенталВондер -->
+      <article class="project">
+        <div class="project-media">
+          <span class="project-badge"><span class="badge-dot live"></span>Видео-демо</span>
+          <video muted autoplay loop playsinline preload="metadata">
+            <source src="videos/dientist_video_compressed.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="project-body">
+          <h3 class="project-title">
+            ДенталВондер
+            <span class="project-arrow">↗</span>
+          </h3>
+          <p class="project-desc">Сайт стоматологии с модалкой записи, анимированными счётчиками и расписанием врачей. Форма заявки и тосты.</p>
+          <div class="project-tags">
+            <span class="tag">HTML</span>
+            <span class="tag">CSS</span>
+            <span class="tag">JS</span>
+            <span class="tag">Modal</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="project-media">
+          <span class="project-badge">Скриншот</span>
+          <img src="images/2nd_proof.png" alt="Проект — превью">
+        </div>
+        <div class="project-body">
+          <h3 class="project-title">
+            ФудВондер
+            <span class="project-arrow">↗</span>
+          </h3>
+          <p class="project-desc">Одностраничник с нуля: простой сайт заказа еды любым удобным способом.</p>
+          <div class="project-tags">
+            <span class="tag">HTML</span>
+            <span class="tag">CSS</span>
+            <span class="tag">JS</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="project-media">
+          <span class="project-badge">Скриншот</span>
+          <img src="images/for_free.png" alt="Проект — превью">
+        </div>
+        <div class="project-body">
+          <h3 class="project-title">
+            TechStore
+            <span class="project-arrow">↗</span>
+          </h3>
+          <p class="project-desc">Ещё один лендинг: TechStore — простой магазин техники с большим выбором ассортимента.</p>
+          <div class="project-tags">
+            <span class="tag">HTML</span>
+            <span class="tag">CSS</span>
+            <span class="tag">JS</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills" id="skills">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2>Что я умею</h2>
+        <p>Стек для быстрых лендингов и небольших сайтов.</p>
+      </div>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <h4><span>◆</span>Вёрстка</h4>
+        <p>Чистый HTML и CSS, адаптив под мобильные, планшеты и десктоп. Flexbox, Grid, современные форматы изображений.</p>
+      </div>
+      <div class="skill-card">
+        <h4><span>◆</span>Интерактив</h4>
+        <p>JavaScript без фреймворков: модалки, формы, анимации при скролле, слайдеры, фильтры, тосты.</p>
+      </div>
+      <div class="skill-card">
+        <h4><span>◆</span>Интеграции</h4>
+        <p>Отправка форм в Telegram, Google Sheets или на почту. Подключение аналитики, карт, виджетов.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="container">
+    <h2>Нужен лендинг?</h2>
+    <p>Напишите — обсудим задачу, сроки и цену. Обычно отвечаю в течение часа - двух.</p>
+    <div class="contact-actions">
+      <a href="https://t.me/softmefor" class="btn btn-primary">Написать в Telegram</a>
+      <a href="mailto:firlteofthem76@gmail.com" class="btn btn-ghost">Отправить письмо</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+</body>
+</html>

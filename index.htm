@@ -1,0 +1,342 @@
+i<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TechStore — техника по лучшим ценам</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  :root {
+    --bg: #0f0f12;
+    --card: #1a1a1f;
+    --text: #e8e8ed;
+    --muted: #8a8a95;
+    --accent: #6c5ce7;
+    --accent-hover: #7d6ef0;
+    --border: #2a2a32;
+  }
+  
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  
+  /* Header */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(15, 15, 18, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 0;
+  }
+  
+  .logo {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+  
+  .logo span { color: var(--accent); }
+  
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+  
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 15px;
+    transition: color 0.2s;
+  }
+  
+  .nav-links a:hover { color: var(--text); }
+  
+  /* Hero */
+  .hero {
+    padding: 100px 0 80px;
+    text-align: center;
+  }
+  
+  .hero h1 {
+    font-size: clamp(36px, 6vw, 64px);
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+  
+  .hero h1 span {
+    background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .hero p {
+    font-size: 18px;
+    color: var(--muted);
+    max-width: 600px;
+    margin: 0 auto 36px;
+  }
+  
+  .btn {
+    display: inline-block;
+    background: var(--accent);
+    color: white;
+    padding: 14px 32px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+  }
+  
+  .btn:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+  }
+  
+  /* Products */
+  .products {
+    padding: 60px 0 100px;
+  }
+  
+  .section-title {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.8px;
+    margin-bottom: 8px;
+  }
+  
+  .section-sub {
+    color: var(--muted);
+    margin-bottom: 40px;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 24px;
+  }
+  
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.25s, border-color 0.25s;
+  }
+  
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent);
+  }
+  
+  .card-img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+    background: #222;
+  }
+  
+  .card-body {
+    padding: 20px;
+  }
+  
+  .card-title {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  
+  .card-desc {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+  
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .price {
+    font-size: 20px;
+    font-weight: 700;
+  }
+  
+  .buy {
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .buy:hover {
+    background: var(--accent);
+    color: white;
+  }
+  
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 0;
+    text-align: center;
+    color: var(--muted);
+    font-size: 14px;
+  }
+  
+  footer a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+    .hero { padding: 60px 0 40px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <nav>
+      <div class="logo">Tech<span>Store</span></div>
+      <ul class="nav-links">
+        <li><a href="#catalog">Каталог</a></li>
+        <li><a href="#delivery">Доставка</a></li>
+        <li><a href="#contact">Контакты</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <h1>Техника, которая<br><span>работает на тебя</span></h1>
+    <p>Смартфоны, ноутбуки, аудио и гаджеты. Официальная гарантия, доставка по всей России за 2 дня.</p>
+    <a href="#catalog" class="btn">Смотреть каталог</a>
+  </div>
+</section>
+
+<section class="products" id="catalog">
+  <div class="container">
+    <h2 class="section-title">Популярное</h2>
+    <p class="section-sub">Выбор наших покупателей за последний месяц</p>
+    
+    <div class="grid">
+      
+      <div class="card">
+        <img class="card-img" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%2Fid%2FOIP.j2sKMeVhyYgq98zkShWJWwHaHa%3Fpid%3DApi&f=1&ipt=e84d70d442649534ac9ee641c5e70d82c9365e67b14a3c5aacc151910097157d" alt="Ноутбук">
+        <div class="card-body">
+          <div class="card-title">Macbook Pro M1 14"</div>
+          <div class="card-desc">16 ГБ RAM, 512 ГБ SSD, Retina-дисплей</div>
+          <div class="card-footer">
+            <span class="price">180 000 ₽</span>
+            <button class="buy">Купить</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card">
+        <img class="card-img" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi-ray.ru%2Fupload%2Fiblock%2F1c7%2Fr2b1jy4cnh0zmjqzvsz63hp2lkd63h27.png&f=1&nofb=1&ipt=cf38bdf396f2872caff7a0bc78c0ee0718c96a7ee09167e8a48f83cadf4cb1e3" alt="Смартфон">
+        <div class="card-body">
+          <div class="card-title">Iphone 16 Pro</div>
+          <div class="card-desc">6.7", 256 ГБ, тройная камера 108 МП</div>
+          <div class="card-footer">
+            <span class="price">64 990 ₽</span>
+            <button class="buy">Купить</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card">
+        <img class="card-img" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fpisces.bbystatic.com%2Fimage2%2FBestBuy_US%2Fimages%2Fproducts%2F6376%2F6376551cv13d.jpg&f=1&nofb=1&ipt=55db04a15e43dccb86d737c83d30bf683e0ab36b3b69bd1a8aa198a2069426b8" alt="Наушники">
+        <div class="card-body">
+          <div class="card-title">Наушники Airpods 3</div>
+          <div class="card-desc">Активное шумоподавление, 40 ч работы</div>
+          <div class="card-footer">
+            <span class="price">23 000 ₽</span>
+            <button class="buy">Купить</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card">
+        <img class="card-img" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fstore.storeimages.cdn-apple.com%2F1%2Fas-images.apple.com%2Fis%2FMGHN4ref_VW_34FR%2Bwatch-case-49-titanium-natural-ultra3_VW_34FR%2Bwatch-face-49-milanese-ultra3_VW_34FR_GEO_US%3Fwid%3D1200%26hei%3D630%26fmt%3Djpeg%26qlt%3D95%26.v%3DdjJHVXQrZ2g4MFFiaXp4WW1xU1BUbmpDV2hhem5qNnpDenFtKzI1OXdzYkpncG05NXptdno5VmVNOFY1RGFaTGY4aHdOQjBiNSszby9Kd0FnejRCcGdnM2swYzVsWGtwUkFKeGltK0RJcHU2djRHWTExdkZHN3BxVGVRdTk2ME15TVUvb0UwM0NyWXQ0RDVqcFVTenBDMjhMYVZFYTFlcFJKV0FFbFFNUTlmaXNzN1gwWXh2Wlc0N3lLeEU5Vmwxa1NRQjliMWU4VEhLVkxITFlyN0Y3QQ&f=1&nofb=1&ipt=ad2944a640d13dcbde992600f91611dc2a307b4a79cba115d5634b7ae1340a4b" alt="Часы">
+        <div class="card-body">
+          <div class="card-title">Умные часы Apple Watch Ultra 3</div>
+          <div class="card-desc">AMOLED, GPS, пульсометр, 7 дней</div>
+          <div class="card-footer">
+            <span class="price">21 990 ₽</span>
+            <button class="buy">Купить</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card">
+        <img class="card-img" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tccq.com%2Fwp-content%2Fuploads%2Fopencart-migration%2FiPhone-17-Pro-Max-Cosmic-Orange-4-1.jpg&f=1&nofb=1&ipt=6e18210fa7104c46cd045504262962072f8afdba33f369f39f2272b55331710b" alt="Камера">
+        <div class="card-body">
+          <div class="card-title">Iphone 17</div>
+          <div class="card-desc">7.0", 256 ГБ, тройная камера 110 МП</div>
+          <div class="card-footer">
+            <span class="price">107 500 ₽</span>
+            <button class="buy">Купить</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card">
+        <img class="card-img" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn1.ozone.ru%2Fs3%2Fmultimedia-1%2F6362578825.jpg&f=1&nofb=1&ipt=1b2f6e5989d3db0fc25ae15225c2d1c3d4d0eee57762bccea98fc9eb7c3c156c" alt="Колонка">
+        <div class="card-body">
+          <div class="card-title">Колонка Яндекс Алиса 2</div>
+          <div class="card-desc">Портативная, 30 Вт, 24 ч работы</div>
+          <div class="card-footer">
+            <span class="price">9 990 ₽</span>
+            <button class="buy">Купить</button>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>© 2026 TechStore. Все права защищены. <a href="#">Политика конфиденциальности</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

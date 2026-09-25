@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ДенталВондер — стоматология нового поколения</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #0d9488;
+    --primary-dark: #0f766e;
+    --primary-soft: #f0fdfa;
+    --primary-mid: #99f6e4;
+    --text: #0f172a;
+    --muted: #64748b;
+    --border: #e2e8f0;
+    --bg: #ffffff;
+    --bg-soft: #f8fafc;
+    --radius: 16px;
+    --shadow: 0 4px 24px rgba(15,23,42,.06);
+    --shadow-hover: 0 16px 40px rgba(13,148,136,.18);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+  /* HEADER */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255,255,255,.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+  .logo { font-weight: 800; font-size: 22px; letter-spacing: -.02em; display: flex; align-items: center; gap: 10px; }
+  .logo-mark {
+    width: 32px; height: 32px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 18px;
+  }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--primary); }
+
+  .btn {
+    padding: 12px 22px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    transition: all .2s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: inherit;
+  }
+  .btn-primary { background: var(--primary); color: #fff; }
+  .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: var(--shadow-hover); }
+  .btn-ghost { background: transparent; color: var(--text); border: 1.5px solid var(--border); }
+  .btn-ghost:hover { border-color: var(--primary); color: var(--primary); }
+  .btn-lg { padding: 16px 28px; font-size: 15px; }
+
+  .menu-toggle {
+    display: none;
+    background: none; border: none; cursor: pointer;
+    font-size: 24px; color: var(--text); padding: 4px;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 64px 0 80px;
+    background: linear-gradient(180deg, var(--primary-soft) 0%, var(--bg) 100%);
+    overflow: hidden;
+  }
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #fff;
+    color: var(--primary-dark);
+    font-size: 13px; font-weight: 700;
+    padding: 8px 16px;
+    border-radius: 20px;
+    margin-bottom: 22px;
+    box-shadow: 0 2px 8px rgba(13,148,136,.1);
+  }
+  .badge-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--primary);
+    animation: pulse 1.8s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: .5; transform: scale(1.3); }
+  }
+  .hero h1 {
+    font-size: 54px;
+    line-height: 1.06;
+    letter-spacing: -.03em;
+    font-weight: 800;
+    margin-bottom: 20px;
+  }
+  .hero h1 span { color: var(--primary); }
+  .hero > .container > .hero-inner > div > p {
+    color: var(--muted);
+    font-size: 17px;
+    max-width: 480px;
+    margin-bottom: 32px;
+  }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 32px; }
+
+  .hero-trust {
+    display: flex; gap: 24px; flex-wrap: wrap;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+  .trust-item { font-size: 14px; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+  .trust-item strong { color: var(--text); font-weight: 800; }
+
+  /* HERO VISUAL — booking preview card */
+  .hero-visual { position: relative; }
+  .booking-preview {
+    background: #fff;
+    border-radius: 24px;
+    padding: 28px;
+    box-shadow: 0 24px 60px rgba(13,148,136,.15);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  .booking-preview::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 26px;
+    background: linear-gradient(135deg, var(--primary) 0%, transparent 60%);
+    z-index: -1;
+    opacity: .15;
+  }
+  .preview-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .preview-title { font-weight: 800; font-size: 17px; letter-spacing: -.01em; }
+  .preview-live {
+    font-size: 12px; font-weight: 700; color: var(--primary);
+    background: var(--primary-soft);
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+  .preview-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .preview-row:last-of-type { border-bottom: none; }
+  .preview-ava {
+    width: 40px; height: 40px;
+    border-radius: 12px;
+    background: var(--primary-soft);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; color: var(--primary-dark);
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+  .preview-info { flex: 1; min-width: 0; }
+  .preview-info strong { display: block; font-size: 14px; font-weight: 700; }
+  .preview-info span { font-size: 13px; color: var(--muted); }
+  .preview-time {
+    font-size: 13px; font-weight: 700; color: var(--primary);
+    background: var(--primary-soft);
+    padding: 6px 12px;
+    border-radius: 10px;
+  }
+
+  /* STATS */
+  .stats {
+    padding: 56px 0;
+    background: var(--text);
+    color: #fff;
+  }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-size: 48px;
+    font-weight: 800;
+    letter-spacing: -.03em;
+    color: var(--primary-mid);
+    line-height: 1;
+    margin-bottom: 8px;
+    font-variant-numeric: tabular-nums;
+  }
+  .stat-label { font-size: 14px; opacity: .7; font-weight: 500; }
+
+  /* SECTION */
+  section { padding: 80px 0; }
+  .section-head {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 56px;
+  }
+  .section-head .eyebrow {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    margin-bottom: 12px;
+  }
+  .section-head h2 {
+    font-size: 40px;
+    letter-spacing: -.02em;
+    font-weight: 800;
+    margin-bottom: 14px;
+    line-height: 1.1;
+  }
+  .section-head p { color: var(--muted); font-size: 16px; }
+
+  /* SERVICES */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .service {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    transition: all .25s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .service:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+    border-color: transparent;
+  }
+  .service-icon {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    background: var(--primary-soft);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+    margin-bottom: 18px;
+  }
+  .service h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; letter-spacing: -.01em; }
+  .service p { font-size: 14px; color: var(--muted); line-height: 1.5; margin-bottom: 16px; }
+  .service-price { font-size: 14px; font-weight: 700; color: var(--primary); }
+  .service-arrow {
+    position: absolute; top: 28px; right: 28px;
+    color: var(--border); font-size: 18px;
+    transition: all .25s;
+  }
+  .service:hover .service-arrow { color: var(--primary); transform: translate(2px, -2px); }
+
+  /* WHY US */
+  .why {
+    background: var(--bg-soft);
+  }
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  .why-card {
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 32px;
+    border: 1px solid var(--border);
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+  .why-num {
+    font-size: 40px;
+    font-weight: 800;
+    color: var(--primary-mid);
+    line-height: 1;
+    letter-spacing: -.03em;
+    flex-shrink: 0;
+    width: 60px;
+  }
+  .why-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; letter-spacing: -.01em; }
+  .why-card p { font-size: 14px; color: var(--muted); line-height: 1.55; }
+
+  /* DOCTORS */
+  .doctors-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .doctor {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: all .25s;
+  }
+  .doctor:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+    border-color: transparent;
+  }
+  .doctor-photo {
+    aspect-ratio: 1 / 1.05;
+    background: linear-gradient(135deg, var(--primary-soft) 0%, var(--primary-mid) 100%);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--primary-dark);
+    font-size: 64px;
+    font-weight: 800;
+    letter-spacing: -.03em;
+    position: relative;
+    overflow: hidden;
+  }
+  .doctor-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .doctor-info { padding: 20px 22px 24px; }
+  .doctor-name { font-size: 18px; font-weight: 700; margin-bottom: 4px; letter-spacing: -.01em; }
+  .doctor-role { font-size: 13px; color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 10px; }
+  .doctor-exp { font-size: 14px; color: var(--muted); }
+
+  /* REVIEWS */
+  .reviews { background: var(--bg-soft); }
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .review {
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 28px;
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+  }
+  .review-stars { color: #f59e0b; font-size: 15px; letter-spacing: 2px; margin-bottom: 14px; }
+  .review-text { font-size: 15px; line-height: 1.6; color: var(--text); margin-bottom: 22px; flex: 1; }
+  .review-author { display: flex; align-items: center; gap: 12px; }
+  .review-ava {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    background: var(--primary-soft);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; color: var(--primary-dark);
+    font-size: 15px;
+  }
+  .review-name { font-size: 14px; font-weight: 700; }
+  .review-role { font-size: 13px; color: var(--muted); }
+
+  /* CTA / BOOKING */
+  .cta-section {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-section::before {
+    content: "";
+    position: absolute;
+    top: -50%; right: -10%;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.05);
+  }
+  .cta-inner {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+  .cta-inner h2 {
+    font-size: 40px;
+    letter-spacing: -.02em;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .cta-inner > div > p { opacity: .9; font-size: 16px; margin-bottom: 24px; max-width: 440px; }
+  .cta-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .cta-list li { display: flex; align-items: center; gap: 10px; font-size: 15px; opacity: .95; }
+  .cta-list li::before { content: "✓"; font-weight: 800; color: var(--primary-mid); font-size: 16px; }
+
+  .booking-form {
+    background: #fff;
+    border-radius: 20px;
+    padding: 32px;
+    box-shadow: 0 24px 60px rgba(0,0,0,.15);
+    color: var(--text);
+  }
+  .booking-form h3 { font-size: 22px; font-weight: 800; margin-bottom: 6px; letter-spacing: -.01em; }
+  .booking-form > p { font-size: 14px; color: var(--muted); margin-bottom: 22px; }
+  .form-group { margin-bottom: 14px; }
+  .form-group label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; color: var(--text); }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 13px 16px;
+    border-radius: 12px;
+    border: 1.5px solid var(--border);
+    font-size: 15px;
+    font-family: inherit;
+    background: #fff;
+    color: var(--text);
+    outline: none;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(13,148,136,.1);
+  }
+  .form-group textarea { resize: vertical; min-height: 72px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .form-note { font-size: 12px; color: var(--muted); margin-top: 12px; text-align: center; }
+  .form-submit { width: 100%; justify-content: center; margin-top: 6px; }
+
+  /* FOOTER */
+  footer {
+    padding: 56px 0 32px;
+    background: var(--text);
+    color: #94a3b8;
+    font-size: 14px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+  }
+  .footer-brand .logo { color: #fff; margin-bottom: 14px; }
+  .footer-brand p { max-width: 300px; line-height: 1.6; font-size: 14px; }
+  .footer-col h5 {
+    font-size: 14px;
+    color: #fff;
+    font-weight: 700;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col a { color: #94a3b8; text-decoration: none; font-size: 14px; transition: color .2s; }
+  .footer-col a:hover { color: var(--primary-mid); }
+  .footer-bottom {
+    padding-top: 28px;
+    border-top: 1px solid rgba(255,255,255,.08);
+    display: flex; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px; font-size: 13px;
+  }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(15,23,42,.55);
+    backdrop-filter: blur(4px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+    z-index: 1000;
+    opacity: 0; pointer-events: none;
+    transition: opacity .25s;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: auto; }
+  .modal {
+    background: #fff;
+    border-radius: 20px;
+    padding: 32px;
+    max-width: 460px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    transform: translateY(20px) scale(.98);
+    transition: transform .25s;
+  }
+  .modal-overlay.open .modal { transform: translateY(0) scale(1); }
+  .modal-close {
+    position: absolute; top: 16px; right: 16px;
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    border: none; background: var(--bg-soft);
+    cursor: pointer; font-size: 18px;
+    color: var(--muted);
+    display: flex; align-items: center; justify-content: center;
+    transition: all .2s;
+  }
+  .modal-close:hover { background: var(--border); color: var(--text); }
+
+  /* TOAST */
+  .toast {
+    position: fixed; bottom: 24px; left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--text); color: #fff;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-size: 14px; font-weight: 600;
+    box-shadow: 0 8px 32px rgba(0,0,0,.25);
+    opacity: 0; transition: all .3s;
+    z-index: 1100;
+    pointer-events: none;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+  .toast::before { content: "✓"; color: var(--primary-mid); font-weight: 800; }
+
+  /* RESPONSIVE */
+  @media (max-width: 960px) {
+    .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+    .hero h1 { font-size: 42px; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 28px; }
+    .stat-num { font-size: 40px; }
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .doctors-grid { grid-template-columns: repeat(2, 1fr); }
+    .reviews-grid { grid-template-columns: 1fr; }
+    .why-grid { grid-template-columns: 1fr; }
+    .cta-inner { grid-template-columns: 1fr; gap: 40px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .section-head h2 { font-size: 32px; }
+    .cta-inner h2 { font-size: 32px; }
+  }
+
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .menu-toggle { display: block; }
+    .nav-links.open {
+      display: flex;
+      position: absolute;
+      top: 72px; left: 0; right: 0;
+      flex-direction: column;
+      background: #fff;
+      padding: 20px 24px;
+      gap: 16px;
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+    .nav .btn-primary { display: none; }
+
+    .hero { padding: 40px 0 56px; }
+    .hero h1 { font-size: 32px; }
+    section { padding: 56px 0; }
+    .section-head { margin-bottom: 36px; }
+    .section-head h2 { font-size: 26px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .doctors-grid { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .stat-num { font-size: 32px; }
+    .form-row { grid-template-columns: 1fr; }
+    .booking-form { padding: 24px; }
+    .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+    .container { padding: 0 18px; }
+    .hero-trust { gap: 14px; }
+    .trust-item { font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <div class="logo">
+      <span class="logo-mark">🦷</span>
+      ДенталВондер
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#services">Услуги</a></li>
+      <li><a href="#why">О клинике</a></li>
+      <li><a href="#doctors">Врачи</a></li>
+      <li><a href="#reviews">Отзывы</a></li>
+    </ul>
+    <button class="btn btn-primary" onclick="openModal()">Записаться</button>
+    <button class="menu-toggle" onclick="toggleMenu()" aria-label="Меню">☰</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container hero-inner">
+    <div>
+      <span class="badge"><span class="badge-dot"></span>Работаем сегодня до 21:00</span>
+      <h1>Стоматология, которой <span>не страшно</span></h1>
+      <p>Лечим зубы без боли, очередей и навязывания лишних услуг. Первый осмотр и консультация — бесплатно.</p>
+      <div class="hero-actions">
+        <button class="btn btn-primary btn-lg" onclick="openModal()">Записаться на приём</button>
+        <a href="#services" class="btn btn-ghost btn-lg">Услуги и цены</a>
+      </div>
+      <div class="hero-trust">
+        <div class="trust-item"><strong>12 лет</strong> на рынке</div>
+        <div class="trust-item"><strong>18 400+</strong> пациентов</div>
+        <div class="trust-item"><strong>4.9 ★</strong> рейтинг клиники</div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="booking-preview">
+        <div class="preview-head">
+          <div class="preview-title">Ближайшие слоты</div>
+          <div class="preview-live">● Онлайн</div>
+        </div>
+        <div class="preview-row">
+          <div class="preview-ava">АС</div>
+          <div class="preview-info">
+            <strong>Анна Смирнова</strong>
+            <span>Терапевт · лечение кариеса</span>
+          </div>
+          <div class="preview-time">14:30</div>
+        </div>
+        <div class="preview-row">
+          <div class="preview-ava">ДК</div>
+          <div class="preview-info">
+            <strong>Дмитрий Ковалёв</strong>
+            <span>Имплантолог · консультация</span>
+          </div>
+          <div class="preview-time">16:00</div>
+        </div>
+        <div class="preview-row">
+          <div class="preview-ava">ЕВ</div>
+          <div class="preview-info">
+            <strong>Елена Волкова</strong>
+            <span>Ортодонт · брекеты</span>
+          </div>
+          <div class="preview-time">18:15</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="container stats-grid" id="statsGrid">
+    <div class="stat">
+      <div class="stat-num" data-target="18400" data-suffix="+">0</div>
+      <div class="stat-label">Довольных пациентов</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" data-target="12" data-suffix=" лет">0</div>
+      <div class="stat-label">Опыта работы</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" data-target="24" data-suffix="">0</div>
+      <div class="stat-label">Врача в штате</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" data-target="98" data-suffix="%">0</div>
+      <div class="stat-label">Возвращаются снова</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Услуги</div>
+      <h2>Полный спектр лечения</h2>
+      <p>От профилактики до имплантации — всё в одном месте, без направления в другие клиники.</p>
+    </div>
+    <div class="services-grid" id="servicesGrid"></div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why" id="why">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Почему мы</div>
+      <h2>4 причины выбрать нас</h2>
+      <p>Мы не продаём лишнее и не пугаем диагнозами. Только честное лечение и прозрачные цены.</p>
+    </div>
+    <div class="why-grid" id="whyGrid"></div>
+  </div>
+</section>
+
+<!-- DOCTORS -->
+<section id="doctors">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Команда</div>
+      <h2>Наши врачи</h2>
+      <p>Специалисты с опытом от 8 лет. Регулярно проходят повышение квалификации.</p>
+    </div>
+    <div class="doctors-grid" id="doctorsGrid"></div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews" id="reviews">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Отзывы</div>
+      <h2>Что говорят пациенты</h2>
+      <p>Более 2 000 отзывов на Яндекс.Картах и ПроДокторов.</p>
+    </div>
+    <div class="reviews-grid" id="reviewsGrid"></div>
+  </div>
+</section>
+
+<!-- CTA / BOOKING -->
+<section class="cta-section">
+  <div class="container cta-inner">
+    <div>
+      <h2>Запишитесь на бесплатную консультацию</h2>
+      <p>Осмотр, план лечения и точная стоимость — без обязательств и навязывания.</p>
+      <ul class="cta-list">
+        <li>Осмотр и консультация — 0 ₽</li>
+        <li>План лечения с фиксированной ценой</li>
+        <li>Скидка 10% на первое лечение</li>
+        <li>Рассрочка 0% на 6 месяцев</li>
+      </ul>
+    </div>
+    <div class="booking-form">
+      <h3>Записаться на приём</h3>
+      <p>Перезвоним в течение 15 минут и подберём удобное время.</p>
+      <form onsubmit="submitForm(event, 'main')">
+        <div class="form-group">
+          <label for="name">Ваше имя</label>
+          <input type="text" id="name" placeholder="Как к вам обращаться" required>
+        </div>
+        <div class="form-group">
+          <label for="phone">Телефон</label>
+          <input type="tel" id="phone" placeholder="+7 (___) ___-__-__" required>
+        </div>
+        <div class="form-group">
+          <label for="service">Услуга</label>
+          <select id="service" required>
+            <option value="">Выберите услугу</option>
+            <option>Консультация</option>
+            <option>Лечение кариеса</option>
+            <option>Имплантация</option>
+            <option>Брекеты / выравнивание</option>
+            <option>Профгигиена</option>
+            <option>Детская стоматология</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary form-submit">Записаться на приём</button>
+        <div class="form-note">Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo"><span class="logo-mark">🦷</span>ДенталВондер</div>
+        <p>Стоматологическая клиника нового поколения. Лечим без боли и навязывания лишних услуг.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Клиника</h5>
+        <ul>
+          <li><a href="#services">Услуги</a></li>
+          <li><a href="#doctors">Врачи</a></li>
+          <li><a href="#reviews">Отзывы</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Пациентам</h5>
+        <ul>
+          <li><a href="#">Цены</a></li>
+          <li><a href="#">Рассрочка</a></li>
+          <li><a href="#">Гарантии</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Контакты</h5>
+        <ul>
+          <li><a href="tel:+70000000000">+7 (000) 000-00-00</a></li>
+          <li><a href="mailto:hello@dentalwonder.ru">hello@dentalwonder.ru</a></li>
+          <li><a href="#">Telegram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 ДенталВондер. Все права защищены.</span>
+      <span>Демо-проект для портфолио</span>
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModalOnOverlay(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()" aria-label="Закрыть">✕</button>
+    <h3>Записаться на приём</h3>
+    <p style="font-size:14px;color:var(--muted);margin-bottom:20px;">Перезвоним в течение 15 минут</p>
+    <form onsubmit="submitForm(event, 'modal')">
+      <div class="form-group">
+        <label>Ваше имя</label>
+        <input type="text" placeholder="Имя" required>
+      </div>
+      <div class="form-group">
+        <label>Телефон</label>
+        <input type="tel" placeholder="+7 (___) ___-__-__" required>
+      </div>
+      <div class="form-group">
+        <label>Услуга</label>
+        <select required>
+          <option value="">Выберите услугу</option>
+          <option>Консультация</option>
+          <option>Лечение кариеса</option>
+          <option>Имплантация</option>
+          <option>Брекеты / выравнивание</option>
+          <option>Профгигиена</option>
+          <option>Детская стоматология</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary form-submit">Записаться</button>
+    </form>
+  </div>
+</div>
+
+<div class="toast" id="toast">Заявка отправлена</div>
+
+<script>
+  /* ============================================================
+     УСЛУГИ — заполняй здесь
+     icon: emoji или оставь пустым
+     ============================================================ */
+  const SERVICES = [
+    { icon: "🦷", title: "Терапия", desc: "Лечение кариеса, пульпита, реставрация зубов. Без боли, под микроскопом.", price: "от 3 500 ₽" },
+    { icon: "🪥", title: "Профгигиена", desc: "Ультразвуковая чистка, снятие налёта и камня, полировка эмали.", price: "от 4 900 ₽" },
+    { icon: "🔧", title: "Имплантация", desc: "Импланты Straumann, Nobel, Astra. Пожизненная гарантия на имплант.", price: "от 32 000 ₽" },
+    { icon: "😁", title: "Ортодонтия", desc: "Брекеты, элайнеры, исправление прикуса. Планы под любой бюджет.", price: "от 120 000 ₽" },
+    { icon: "🧒", title: "Детская стоматология", desc: "Лечение в игровой форме, без стресса. Приём детей с 3 лет.", price: "от 2 500 ₽" },
+    { icon: "🎨", title: "Эстетика", desc: "Виниры, отбеливание, реставрация. Улыбка как с обложки.", price: "от 18 000 ₽" }
+  ];
+
+  /* ============================================================
+     ПОЧЕМУ МЫ
+     ============================================================ */
+  const WHY = [
+    { num: "01", title: "Фиксированная цена", desc: "Стоимость лечения согласовываем до начала. Никаких скрытых доплат в процессе." },
+    { num: "02", title: "Лечение без боли", desc: "Современная анестезия и седация. Работаем с пациентами, которые боятся стоматологов." },
+    { num: "03", title: "Своя лаборатория", desc: "Коронки и протезы делаем на месте — сроки короче, качество выше." },
+    { num: "04", title: "Гарантия на работы", desc: "До 5 лет на лечение и пожизненная гарантия на импланты. Всё прописано в договоре." }
+  ];
+
+  /* ============================================================
+     ВРАЧИ
+     photo: ссылка на фото или "" (будет стаб с инициалами)
+     ============================================================ */
+  const DOCTORS = [
+    { name: "Анна Смирнова", role: "Терапевт", exp: "Стаж 12 лет · МГМСУ им. Евдокимова", photo: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ffb.ru%2Fmisc%2Fi%2Fgallery%2F2%2F3347224.jpg&f=1&nofb=1&ipt=614b640c65f01b47e79cb471ff44993224b4dfb90d09b78d74a06bdaf9c30182", initials: "АС" },
+    { name: "Дмитрий Ковалёв", role: "Имплантолог", exp: "Стаж 15 лет · КМН, 2 400+ имплантов", photo: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia.istockphoto.com%2Fid%2F493526440%2Fru%2F%25D1%2584%25D0%25BE%25D1%2582%25D0%25BE%2F%25D1%2581%25D1%2582%25D0%25BE%25D0%25BC%25D0%25B0%25D1%2582%25D0%25BE%25D0%25BB%25D0%25BE%25D0%25B3%25D0%25B0-%25D0%25BF%25D0%25BE%25D1%2580%25D1%2582%25D1%2580%25D0%25B5%25D1%2582-%25D0%25B7%25D1%2580%25D0%25B5%25D0%25BB%25D1%258B%25D0%25B5-%25D0%25BC%25D1%2583%25D0%25B6%25D1%2587%25D0%25B8%25D0%25BD%25D1%258B.jpg%3Fs%3D612x612%26w%3D0%26k%3D20%26c%3D2s0yj8LJInf9Tx1xsq8BYx3mf5h3YrcDbgph9B8pZNA%3D&f=1&nofb=1&ipt=bd3bba415e0fa886c921d9c7ceb3b3e4d99e08cbc3949cfb98e271a3cee7c742", initials: "ДК" },
+    { name: "Елена Волкова", role: "Ортодонт", exp: "Стаж 9 лет · Сертификат Invisalign", photo: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia.istockphoto.com%2Fid%2F1816783392%2Fru%2F%25D1%2584%25D0%25BE%25D1%2582%25D0%25BE%2F%25D1%2581%25D1%2587%25D0%25B0%25D1%2581%25D1%2582%25D0%25BB%25D0%25B8%25D0%25B2%25D1%258B%25D0%25B9-%25D0%25BF%25D0%25BB%25D0%25B0%25D0%25BD%25D1%2588%25D0%25B5%25D1%2582-%25D0%25B8-%25D0%25BF%25D0%25BE%25D1%2580%25D1%2582%25D1%2580%25D0%25B5%25D1%2582-%25D0%25B6%25D0%25B5%25D0%25BD%25D1%2589%25D0%25B8%25D0%25BD%25D1%258B-%25D1%2581%25D1%2582%25D0%25BE%25D0%25BC%25D0%25B0%25D1%2582%25D0%25BE%25D0%25BB%25D0%25BE%25D0%25B3%25D0%25B0-%25D1%2581-%25D1%2583%25D0%25B2%25D0%25B5%25D1%2580%25D0%25B5%25D0%25BD%25D0%25BD%25D0%25BE%25D1%2581%25D1%2582%25D1%258C%25D1%258E-%25D0%25B2-%25D1%2581%25D0%25B2%25D0%25BE%25D0%25B5%25D0%25BC-%25D0%25BA%25D0%25B0%25D0%25B1%25D0%25B8%25D0%25BD%25D0%25B5%25D1%2582%25D0%25B5-%25D0%25BF%25D1%2580%25D0%25BE%25D0%25B2%25D0%25BE%25D0%25B4%25D1%258F%25D1%2589%25D0%25B5%25D0%25B9.jpg%3Fs%3D612x612%26w%3D0%26k%3D20%26c%3DaQHEgHuJKKDytvBlztG37UmmmMOkREaCGUkUIaZjASc%3D&f=1&nofb=1&ipt=7a0890001310a99511ece77e16d434cb7ca5a8a3db044d244417a2d3c5bad552", initials: "ЕВ" }
+  ];
+
+  /* ============================================================
+     ОТЗЫВЫ
+     ============================================================ */
+  const REVIEWS = [
+    { text: "Боялась стоматологов 10 лет. Здесь первый раз села в кресло без тряски. Лечили под седацией, ничего не помню — и это счастье.", name: "Мария К.", role: "Терапия", initials: "МК" },
+    { text: "Имплантировали два зуба. Всё чётко по срокам, цена не менялась. Через полгода — как свои. Спасибо Дмитрию!", name: "Игорь В.", role: "Имплантация", initials: "ИВ" },
+    { text: "Дочка (5 лет) шла на приём со слезами, вышла с наклейкой и улыбкой. Врач — волшебница. Теперь ходим только сюда.", name: "Ольга С.", role: "Детская стоматология", initials: "ОС" }
+  ];
+
+  /* ============================================================ */
+
+  function renderServices() {
+    document.getElementById('servicesGrid').innerHTML = SERVICES.map(s => `
+      <div class="service">
+        <span class="service-arrow">↗</span>
+        <div class="service-icon">${s.icon || "🦷"}</div>
+        <h3>${s.title}</h3>
+        <p>${s.desc}</p>
+        <div class="service-price">${s.price}</div>
+      </div>
+    `).join('');
+  }
+
+  function renderWhy() {
+    document.getElementById('whyGrid').innerHTML = WHY.map(w => `
+      <div class="why-card">
+        <div class="why-num">${w.num}</div>
+        <div>
+          <h3>${w.title}</h3>
+          <p>${w.desc}</p>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function renderDoctors() {
+    document.getElementById('doctorsGrid').innerHTML = DOCTORS.map(d => `
+      <div class="doctor">
+        <div class="doctor-photo">
+          ${d.photo
+            ? `<img src="${d.photo}" alt="${d.name}" loading="lazy">`
+            : d.initials}
+        </div>
+        <div class="doctor-info">
+          <div class="doctor-name">${d.name}</div>
+          <div class="doctor-role">${d.role}</div>
+          <div class="doctor-exp">${d.exp}</div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function renderReviews() {
+    document.getElementById('reviewsGrid').innerHTML = REVIEWS.map(r => `
+      <div class="review">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">«${r.text}»</p>
+        <div class="review-author">
+          <div class="review-ava">${r.initials}</div>
+          <div>
+            <div class="review-name">${r.name}</div>
+            <div class="review-role">${r.role}</div>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  /* Анимированные счётчики */
+  function animateCounters() {
+    const nums = document.querySelectorAll('.stat-num');
+    nums.forEach(el => {
+      const target = +el.dataset.target;
+      const suffix = el.dataset.suffix || '';
+      const duration = 1600;
+      const start = performance.now();
+      const format = target > 1000
+        ? (v) => Math.floor(v).toLocaleString('ru-RU')
+        : (v) => Math.floor(v);
+      function tick(now) {
+        const t = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - t, 3);
+        el.textContent = format(target * eased) + suffix;
+        if (t < 1) requestAnimationFrame(tick);
+        else el.textContent = format(target) + suffix;
+      }
+      requestAnimationFrame(tick);
+    });
+  }
+
+  const statsGrid = document.getElementById('statsGrid');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        animateCounters();
+        observer.disconnect();
+      }
+    });
+  }, { threshold: 0.4 });
+  observer.observe(statsGrid);
+
+  /* Модалка */
+  function openModal() {
+    document.getElementById('modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeModalOnOverlay(e) {
+    if (e.target.id === 'modal') closeModal();
+  }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  /* Мобильное меню */
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+
+  /* Отправка формы */
+  let toastTimer;
+  function submitForm(e, source) {
+    e.preventDefault();
+    e.target.reset();
+    if (source === 'modal') closeModal();
+    showToast('Заявка отправлена. Мы перезвоним!');
+  }
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 2600);
+  }
+
+  /* Init */
+  renderServices();
+  renderWhy();
+  renderDoctors();
+  renderReviews();
+</script>
+
+</body>
+</html>
