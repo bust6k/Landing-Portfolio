@@ -310,6 +310,8 @@
 
   /* CONTACT */
   .contact { text-align: center; padding: 80px 0 96px; }
+  .education { text-align: center; padding: 80px 0 96px; }
+  
   .contact h2 {
     font-size: clamp(28px, 4vw, 42px);
     letter-spacing: -.03em;
@@ -330,6 +332,27 @@
     justify-content: center;
     flex-wrap: wrap;
   }
+ .education h2 {
+    font-size: clamp(28px, 4vw, 42px);
+    letter-spacing: -.03em;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .education p {
+    color: var(--muted);
+    font-size: 16px;
+    max-width: 500px;
+    margin: 0 auto 32px;
+    line-height: 1.6;
+  }
+  .education-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
 
   /* FOOTER */
   footer {
@@ -364,6 +387,7 @@
     <ul class="nav-links">
       <li><a href="#projects">Работы</a></li>
       <li><a href="#skills">Навыки</a></li>
+      <li><a href="#education">Образование</a></li>
       <li><a href="#contact">Контакты</a></li>
     </ul>
     <a href="#contact" class="nav-cta">Связаться</a>
@@ -516,7 +540,18 @@
   </div>
 </section>
 
-<!-- CONTACT -->
+<section class="education" id="education">
+  <div class="container">
+    <h2>Откуда навыки?</h2>
+    <p>Кроме самоучения и самотренировки, Яндекс.лицей сыграл немалую часть  в становлении меня специалистом</p>
+    <div class="contact-actions">
+      <a href="https://education.yandex.ru/profile/docs?id=3e91d41a-4b4b-4a84-859c-42725c5a4091" class="btn btn-primary">Посмотреть базовый сертификат</a>
+      <a href="https://education.yandex.ru/profile/docs?id=ec9afd60-9f46-47d2-9160-189b0eb07ab8" class="btn btn-primary">Посмотреть промышленный сертификат</a>
+    </div>
+  </div>
+</section>
+
+
 <section class="contact" id="contact">
   <div class="container">
     <h2>Нужен лендинг?</h2>
