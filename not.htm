@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PWC — Python Web-killer. Убийца Django.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d1117;
+    --bg-soft: #111823;
+    --card: #141c28;
+    --border: rgba(255,220,80,.14);
+    --border-bright: rgba(255,220,80,.35);
+    --text: #eaf0f7;
+    --muted: #8592a4;
+    --muted-bright: #b8c3d3;
+    --yellow: #ffd83d;
+    --blue: #4b8bbe;
+    --pink: #f472b6;
+    --gradient: linear-gradient(135deg, #ffd83d 0%, #4b8bbe 55%, #f472b6 100%);
+    --gradient-soft: linear-gradient(135deg, rgba(255,216,61,.12) 0%, rgba(75,139,190,.12) 55%, rgba(244,114,182,.12) 100%);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  .container { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+
+  .bg-grid {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+      linear-gradient(rgba(255,220,80,.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,220,80,.035) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(circle at 50% 30%, black 0%, transparent 80%);
+  }
+  .bg-glow {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .bg-glow::before {
+    content: "";
+    position: absolute;
+    top: -25%; left: 20%;
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(255,216,61,.10) 0%, transparent 60%);
+    filter: blur(60px);
+  }
+  .bg-glow::after {
+    content: "";
+    position: absolute;
+    bottom: -30%; right: -5%;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(75,139,190,.10) 0%, transparent 60%);
+    filter: blur(60px);
+  }
+
+  header, main { position: relative; z-index: 1; }
+
+  /* HEADER */
+  header {
+    border-bottom: 1px solid var(--border);
+    background: rgba(13,17,23,.7);
+    backdrop-filter: blur(14px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 58px;
+  }
+  .logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 800;
+    font-size: 18px;
+    display: flex; align-items: center; gap: 9px;
+    letter-spacing: -.02em;
+  }
+  .logo-mark {
+    width: 28px; height: 28px;
+    border-radius: 8px;
+    background: var(--gradient);
+    color: #0d1117;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; font-weight: 900;
+    box-shadow: 0 0 18px rgba(255,216,61,.35);
+  }
+  .logo .dim { color: var(--muted); font-weight: 500; }
+
+  .nav-links { display: flex; gap: 22px; list-style: none; }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: 'JetBrains Mono', monospace;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--yellow); }
+
+  .btn {
+    padding: 8px 15px;
+    border-radius: 9px;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    border: none;
+    transition: all .2s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: 'JetBrains Mono', monospace;
+    white-space: nowrap;
+  }
+  .btn-primary {
+    background: var(--yellow);
+    color: #0d1117;
+  }
+  .btn-primary:hover {
+    background: #ffcb0f;
+    transform: translateY(-1px);
+    box-shadow: 0 10px 26px rgba(255,216,61,.35);
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border-bright);
+  }
+  .btn-ghost:hover { border-color: var(--yellow); color: var(--yellow); }
+
+  /* HERO */
+  .hero { padding: 30px 0 20px; }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.05fr;
+    gap: 34px;
+    align-items: center;
+  }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 5px 12px;
+    border-radius: 30px;
+    background: rgba(255,216,61,.08);
+    border: 1px solid rgba(255,216,61,.3);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--muted-bright);
+    margin-bottom: 16px;
+  }
+  .badge .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--yellow);
+    box-shadow: 0 0 10px var(--yellow);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .4; }
+  }
+  .badge strong { color: var(--text); font-weight: 800; }
+
+  .hero h1 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(28px, 3.6vw, 44px);
+    line-height: 1.06;
+    letter-spacing: -.035em;
+    font-weight: 800;
+    margin-bottom: 14px;
+  }
+  .hero h1 .grad {
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero h1 .strike {
+    position: relative;
+    display: inline-block;
+    color: var(--muted);
+  }
+  .hero h1 .strike::after {
+    content: "";
+    position: absolute;
+    left: -3%; right: -3%;
+    top: 52%;
+    height: 3px;
+    background: var(--pink);
+    transform: rotate(-2deg);
+    box-shadow: 0 0 12px var(--pink);
+  }
+
+  .hero p.lead {
+    color: var(--muted-bright);
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    max-width: 520px;
+  }
+  .hero p.lead strong { color: var(--yellow); font-weight: 700; }
+
+  .hero-actions {
+    display: flex; gap: 10px; flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+
+  .hero-note {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    color: var(--muted);
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .hero-note span::before {
+    content: "✓";
+    color: var(--yellow);
+    font-weight: 900;
+    margin-right: 5px;
+  }
+
+  /* CODE CARD */
+  .code {
+    border-radius: 13px;
+    background: var(--card);
+    border: 1px solid var(--border-bright);
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px rgba(255,216,61,.05),
+      0 22px 60px rgba(255,216,61,.10);
+  }
+  .code-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: rgba(0,0,0,.35);
+    border-bottom: 1px solid var(--border);
+  }
+  .code-dots { display: flex; gap: 6px; }
+  .code-dots span {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+  }
+  .code-dots span:nth-child(1) { background: #ff5f57; }
+  .code-dots span:nth-child(2) { background: #febc2e; }
+  .code-dots span:nth-child(3) { background: #28c840; }
+  .code-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-left: 6px;
+  }
+  .code-tag {
+    margin-left: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    padding: 3px 9px;
+    border-radius: 20px;
+    background: rgba(255,216,61,.12);
+    border: 1px solid rgba(255,216,61,.3);
+    color: var(--yellow);
+    font-weight: 700;
+  }
+  .code-body {
+    padding: 14px 16px 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    line-height: 1.75;
+  }
+  .code-body .ln {
+    display: flex;
+    gap: 12px;
+  }
+  .code-body .num {
+    color: #2e3846;
+    user-select: none;
+    min-width: 18px;
+    text-align: right;
+  }
+  .code-body .c { color: var(--muted); font-style: italic; }
+  .code-body .k { color: var(--pink); }
+  .code-body .f { color: var(--yellow); }
+  .code-body .s { color: #7dd3fc; }
+  .code-body .n { color: #fbbf24; }
+  .code-body .o { color: var(--text); }
+  .code-body .p { color: var(--muted-bright); }
+
+  /* FEATURES STRIP */
+  .features {
+    padding: 22px 0 24px;
+  }
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  .feat {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+    transition: all .25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .feat::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--gradient);
+    opacity: 0;
+    transition: opacity .25s;
+  }
+  .feat:hover {
+    transform: translateY(-3px);
+    border-color: var(--border-bright);
+  }
+  .feat:hover::before { opacity: 1; }
+  .feat .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--yellow);
+    background: rgba(255,216,61,.08);
+    border: 1px solid rgba(255,216,61,.2);
+    padding: 3px 8px;
+    border-radius: 6px;
+    display: inline-block;
+    margin-bottom: 10px;
+    letter-spacing: .04em;
+  }
+  .feat h3 {
+    font-size: 14.5px;
+    font-weight: 800;
+    letter-spacing: -.01em;
+    margin-bottom: 5px;
+    line-height: 1.25;
+  }
+  .feat h3 .accent { color: var(--yellow); }
+  .feat p {
+    font-size: 12.5px;
+    color: var(--muted-bright);
+    line-height: 1.5;
+  }
+
+  /* ANY ORDER STRIP */
+  .order-strip {
+    margin-top: 12px;
+    border-radius: 12px;
+    padding: 14px 20px;
+    background:
+      radial-gradient(circle at 90% 50%, rgba(244,114,182,.10), transparent 45%),
+      linear-gradient(135deg, rgba(255,216,61,.05) 0%, rgba(75,139,190,.05) 100%);
+    border: 1px solid var(--border-bright);
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 18px;
+    align-items: center;
+  }
+  .order-strip .stamp {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 800;
+    font-size: 11px;
+    padding: 5px 10px;
+    border-radius: 7px;
+    background: rgba(244,114,182,.15);
+    color: #f9a8d4;
+    border: 1px solid rgba(244,114,182,.4);
+    letter-spacing: .1em;
+    white-space: nowrap;
+  }
+  .order-strip h3 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: -.01em;
+    margin-bottom: 3px;
+  }
+  .order-strip h3 .accent { color: var(--yellow); }
+  .order-strip p {
+    font-size: 12px;
+    color: var(--muted-bright);
+    line-height: 1.5;
+  }
+  .order-strip .mini {
+    display: flex;
+    gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .order-strip .mini span {
+    padding: 3px 8px;
+    border-radius: 5px;
+    background: rgba(0,0,0,.3);
+    border: 1px solid var(--border);
+    color: var(--yellow);
+    font-weight: 700;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 18px 0 24px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    text-align: center;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 1000px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 22px; }
+    .features-grid { grid-template-columns: repeat(2, 1fr); }
+    .order-strip { grid-template-columns: 1fr; }
+    .order-strip .mini { flex-wrap: wrap; }
+  }
+
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .container { padding: 0 16px; }
+    .hero { padding: 22px 0 12px; }
+    .features-grid { grid-template-columns: 1fr; }
+    .code-body { font-size: 11.5px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+
+<header>
+  <div class="container nav">
+    <div class="logo">
+      <span class="logo-mark">P</span>
+      PWC<span class="dim">/python-web-killer</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#features">Возможности</a></li>
+      <li><a href="#order">Роутеры</a></li>
+      <li><a href="#">Docs</a></li>
+      <li><a href="#">GitHub</a></li>
+    </ul>
+    <a href="#" class="btn btn-primary">pip install pwc</a>
+  </div>
+</header>
+
+<main>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+
+      <!-- LEFT: TEXT -->
+      <div>
+        <div class="badge">
+          <span class="dot"></span>
+          <strong>v1.0</strong> · Python Web-killer
+        </div>
+
+        <h1>
+          Фреймворк, после которого<br>
+          <span class="strike">Django</span> <span class="grad">не нужен</span>.
+        </h1>
+
+        <p class="lead">
+          PWC — асинхронный веб-фреймворк на Python. <strong>В 6 раз быстрее Django</strong>,
+          без ORM-магии и без обязательной структуры проекта. Хендлеры роутеров —
+          <strong>в любом порядке</strong>, в одном файле. Один импорт, один декоратор, один запуск.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#" class="btn btn-primary">pip install pwc</a>
+          <a href="#" class="btn btn-ghost">Документация</a>
+        </div>
+
+        <div class="hero-note">
+          <span>ASGI + WSGI</span>
+          <span>Zero-config</span>
+          <span>1 файл = приложение</span>
+        </div>
+      </div>
+
+      <!-- RIGHT: CODE -->
+      <div class="code">
+        <div class="code-head">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <div class="code-title">app.py</div>
+          <div class="code-tag">any order</div>
+        </div>
+        <div class="code-body">
+          <div class="ln"><span class="num">1</span><span class="k">from</span> <span class="o">pwc</span> <span class="k">import</span> <span class="o">App</span></div>
+          <div class="ln"><span class="num">2</span><span class="o">app</span> <span class="p">=</span> <span class="o">App</span><span class="p">()</span></div>
+          <div class="ln"><span class="num">3</span></div>
+          <div class="ln"><span class="num">4</span><span class="c"># порядок НЕ важен — PWC сам</span></div>
+          <div class="ln"><span class="num">5</span><span class="c"># построит дерево роутов</span></div>
+          <div class="ln"><span class="num">6</span><span class="f">@app.get</span><span class="p">(</span><span class="s">"/user/{id}"</span><span class="p">)</span></div>
+          <div class="ln"><span class="num">7</span><span class="k">def</span> <span class="f">user</span><span class="p">(</span><span class="o">id</span><span class="p">):</span> <span class="k">return</span> <span class="p">{</span><span class="s">"id"</span><span class="p">:</span> <span class="o">id</span><span class="p">}</span></div>
+          <div class="ln"><span class="num">8</span></div>
+          <div class="ln"><span class="num">9</span><span class="f">@app.get</span><span class="p">(</span><span class="s">"/"</span><span class="p">)</span></div>
+          <div class="ln"><span class="num">10</span><span class="k">async def</span> <span class="f">index</span><span class="p">():</span> <span class="k">return</span> <span class="s">"hello"</span></div>
+          <div class="ln"><span class="num">11</span></div>
+          <div class="ln"><span class="num">12</span><span class="f">@app.post</span><span class="p">(</span><span class="s">"/user"</span><span class="p">)</span></div>
+          <div class="ln"><span class="num">13</span><span class="k">async def</span> <span class="f">create</span><span class="p">(</span><span class="o">data</span><span class="p">):</span> <span class="k">return</span> <span class="o">data</span></div>
+          <div class="ln"><span class="num">14</span></div>
+          <div class="ln"><span class="num">15</span><span class="o">app</span><span class="p">.</span><span class="f">run</span><span class="p">()</span>  <span class="c"># :8000</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- FEATURES -->
+    <div class="features">
+      <div class="features-grid">
+
+        <div class="feat">
+          <div class="tag">SPEED</div>
+          <h3>В <span class="accent">6 раз</span> быстрее Django</h3>
+          <p>42 000 req/s на одном ядре. ASGI из коробки, zero-copy роутинг, собственный JSON-сериализатор.</p>
+        </div>
+
+        <div class="feat">
+          <div class="tag">ROUTER</div>
+          <h3>Хендлеры в <span class="accent">любом порядке</span></h3>
+          <p>Не нужно группировать роуты. PWC сам собирает дерево по путям и весам — даже если /user/{id} объявлен раньше /.</p>
+        </div>
+
+        <div class="feat">
+          <div class="tag">ZERO-CONF</div>
+          <h3>Никаких <span class="accent">settings.py</span></h3>
+          <p>Один файл — целое приложение. Никаких manage.py, миграций, apps, INSTALLED_APPS и «где тут моя модель».</p>
+        </div>
+
+        <div class="feat">
+          <div class="tag">BATTERIES</div>
+          <h3>Всё <span class="accent">включено</span></h3>
+          <p>DI, валидация, сессии, WebSocket, ORM-lite, тесты. Модули подключаются по одному импорту, а не по 40 строкам конфига.</p>
+        </div>
+
+      </div>
+
+      <!-- ANY ORDER STRIP -->
+      <div class="order-strip" id="order">
+        <div class="stamp">ANY ORDER</div>
+        <div>
+          <h3>Дерево роутов строится <span class="accent">после</span> загрузки модуля, а не по порядку строк</h3>
+          <p>Объявляйте <span class="mono" style="font-family:'JetBrains Mono',monospace;color:var(--yellow);">/user/{id}</span> до <span class="mono" style="font-family:'JetBrains Mono',monospace;color:var(--yellow);">/</span>, переопределяйте префиксы через <span class="mono" style="font-family:'JetBrains Mono',monospace;color:var(--yellow);">@app.group</span>, монтируйте под-приложения где угодно. Django бы упал с 404 — PWC просто работает.</p>
+        </div>
+        <div class="mini">
+          <span>@app.get</span>
+          <span>@app.post</span>
+          <span>@app.ws</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    © 2026 PWC · Python Web-killer · pip install pwc · MIT
+  </div>
+</footer>
+
+</body>
+</html>

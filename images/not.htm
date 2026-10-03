@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EngineersPiece — прокладываем лучшие дороги в стране</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f4f3ef;
+    --bg-soft: #e9e7e0;
+    --card: #ffffff;
+    --text: #1a1c1a;
+    --muted: #6b6f6b;
+    --asphalt: #2b2f33;
+    --asphalt-soft: #3a3f44;
+    --yellow: #ffcc00;
+    --yellow-dark: #e0b400;
+    --border: #dcd9d0;
+    --radius: 14px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+  /* HEADER */
+  header { background: #fff; border-bottom: 1px solid var(--border); }
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 66px;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    font-weight: 900;
+    font-size: 19px;
+    letter-spacing: -.01em;
+  }
+  .logo-mark {
+    width: 34px; height: 34px;
+    border-radius: 8px;
+    background: var(--asphalt);
+    color: var(--yellow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 900;
+  }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14.5px;
+    font-weight: 600;
+    margin-left: 26px;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--asphalt); }
+  .nav-links .phone {
+    color: var(--text);
+    font-weight: 700;
+  }
+  .nav-links .cta {
+    background: var(--yellow);
+    color: var(--asphalt);
+    padding: 9px 18px;
+    border-radius: 10px;
+  }
+  .nav-links .cta:hover { background: var(--yellow-dark); }
+
+  /* HERO */
+  .hero {
+    padding: 56px 0 64px;
+    background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 52px;
+    align-items: center;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    background: #fff7d6;
+    color: #7a5a00;
+    border: 1px solid #f2e0a0;
+    border-radius: 30px;
+    font-size: 12.5px;
+    font-weight: 700;
+    margin-bottom: 18px;
+  }
+  .hero-badge .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--yellow-dark);
+  }
+
+  .hero h1 {
+    font-size: 48px;
+    line-height: 1.06;
+    letter-spacing: -.03em;
+    font-weight: 900;
+    margin-bottom: 20px;
+  }
+  .hero h1 span {
+    background: linear-gradient(180deg, transparent 62%, var(--yellow) 62%);
+    padding: 0 4px;
+  }
+
+  .hero p.lead {
+    color: var(--muted);
+    font-size: 16.5px;
+    line-height: 1.65;
+    margin-bottom: 28px;
+    max-width: 480px;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 26px;
+  }
+  .btn {
+    padding: 14px 26px;
+    border-radius: 11px;
+    font-weight: 700;
+    font-size: 14.5px;
+    text-decoration: none;
+    display: inline-block;
+    transition: all .2s;
+  }
+  .btn-primary {
+    background: var(--asphalt);
+    color: #fff;
+  }
+  .btn-primary:hover {
+    background: #15181a;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(43,47,51,.25);
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--asphalt);
+    border: 2px solid var(--asphalt);
+  }
+  .btn-ghost:hover { background: var(--asphalt); color: #fff; }
+
+  .hero-points {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 22px;
+    font-size: 13.5px;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .hero-points span::before {
+    content: "▸";
+    color: var(--yellow-dark);
+    margin-right: 6px;
+    font-weight: 900;
+  }
+
+  /* ROAD VISUAL */
+  .road {
+    position: relative;
+    aspect-ratio: 4/5;
+    border-radius: 18px;
+    background: linear-gradient(180deg, #dcd9d0 0%, #c2bfb6 45%, var(--asphalt) 100%);
+    overflow: hidden;
+    box-shadow: 0 22px 50px rgba(43,47,51,.2);
+  }
+  .road::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%) perspective(300px) rotateX(60deg);
+    transform-origin: bottom;
+    width: 60%;
+    height: 70%;
+    background: var(--asphalt);
+  }
+  .road::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%) perspective(300px) rotateX(60deg);
+    transform-origin: bottom;
+    width: 4%;
+    height: 70%;
+    background: repeating-linear-gradient(
+      180deg,
+      var(--yellow) 0 22px,
+      transparent 22px 42px
+    );
+  }
+  .road-tag {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(255,255,255,.95);
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--asphalt);
+  }
+  .road-tag::before {
+    content: "●";
+    color: var(--yellow-dark);
+    margin-right: 6px;
+  }
+  .road-km {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    background: var(--yellow);
+    color: var(--asphalt);
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-weight: 900;
+    font-size: 14px;
+    letter-spacing: -.01em;
+  }
+
+  /* STATS */
+  .stats {
+    padding: 22px 0;
+    background: var(--asphalt);
+    color: #fff;
+  }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 28px;
+  }
+  .stat .num {
+    font-size: 30px;
+    font-weight: 900;
+    letter-spacing: -.03em;
+    color: var(--yellow);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat .lbl {
+    font-size: 13px;
+    color: #a5a8a8;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  /* SERVICES */
+  .services { padding: 56px 0 40px; }
+  .section-head {
+    text-align: center;
+    margin-bottom: 34px;
+  }
+  .section-head h2 {
+    font-size: 32px;
+    font-weight: 900;
+    letter-spacing: -.02em;
+    margin-bottom: 8px;
+  }
+  .section-head h2 span {
+    background: linear-gradient(180deg, transparent 62%, var(--yellow) 62%);
+    padding: 0 4px;
+  }
+  .section-head p {
+    color: var(--muted);
+    font-size: 15px;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .service {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    transition: all .25s;
+  }
+  .service:hover {
+    border-color: var(--asphalt);
+    transform: translateY(-3px);
+    box-shadow: 0 16px 32px rgba(43,47,51,.1);
+  }
+  .service-icon {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    background: var(--yellow);
+    color: var(--asphalt);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    margin-bottom: 16px;
+    font-weight: 900;
+  }
+  .service h3 {
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: -.01em;
+    margin-bottom: 8px;
+  }
+  .service p {
+    font-size: 13.5px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* CTA */
+  .strip {
+    background: var(--yellow);
+    border-radius: 20px;
+    padding: 34px 40px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 28px;
+    align-items: center;
+    margin: 20px auto 60px;
+    max-width: 1072px;
+  }
+  .strip h2 {
+    font-size: 26px;
+    font-weight: 900;
+    letter-spacing: -.02em;
+    color: var(--asphalt);
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+  .strip p {
+    font-size: 14.5px;
+    color: #4a3c00;
+    line-height: 1.55;
+    max-width: 560px;
+  }
+  .strip .btn {
+    background: var(--asphalt);
+    color: #fff;
+    padding: 15px 28px;
+    white-space: nowrap;
+  }
+  .strip .btn:hover {
+    background: #15181a;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(43,47,51,.25);
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 26px 0 34px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 13.5px;
+  }
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .footer-links { display: flex; gap: 22px; flex-wrap: wrap; }
+  .footer-links a {
+    color: var(--muted);
+    text-decoration: none;
+  }
+  .footer-links a:hover { color: var(--asphalt); }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 36px; }
+    .hero h1 { font-size: 38px; }
+    .road { aspect-ratio: 16/10; max-width: 520px; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .strip { grid-template-columns: 1fr; padding: 28px; }
+  }
+  @media (max-width: 560px) {
+    .nav-links a { display: none; }
+    .nav-links .cta { display: inline-block; }
+    .hero h1 { font-size: 30px; }
+    .section-head h2 { font-size: 24px; }
+    .strip h2 { font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <div class="logo"><span class="logo-mark">EP</span>EngineersPiece</div>
+    <div class="nav-links">
+      <a href="#services">Услуги</a>
+      <a href="#">Проекты</a>
+      <a href="#">О компании</a>
+      <a href="tel:+74950000000" class="phone">+7 (495) 000-00-00</a>
+      <a href="#cta" class="cta">Оставить заявку</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <span class="hero-badge"><span class="dot"></span> Строим дороги с 2004 года</span>
+      <h1>Прокладываем <span>лучшие дороги</span> в стране</h1>
+      <p class="lead">
+        Федеральные трассы, городские магистрали, промышленные площадки и мосты.
+        Собственная техника, свои асфальтобетонные заводы, гарантия на покрытие 7 лет.
+      </p>
+      <div class="hero-actions">
+        <a href="#cta" class="btn btn-primary">Обсудить проект</a>
+        <a href="#services" class="btn btn-ghost">Что мы делаем</a>
+      </div>
+      <div class="hero-points">
+        <span>Допуски СРО</span>
+        <span>Госзаказы и частные объекты</span>
+        <span>Сдача в срок</span>
+      </div>
+    </div>
+
+    <div class="road">
+      <div class="road-tag">Трасса М-12 · участок 214–248 км</div>
+      <div class="road-km">4 200 км в год</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="container stats-grid">
+    <div class="stat">
+      <div class="num">20 лет</div>
+      <div class="lbl">работаем на дорожном рынке</div>
+    </div>
+    <div class="stat">
+      <div class="num">4 200 км</div>
+      <div class="lbl">дорог сдано за последние 5 лет</div>
+    </div>
+    <div class="stat">
+      <div class="num">68</div>
+      <div class="lbl">единиц собственной техники</div>
+    </div>
+    <div class="stat">
+      <div class="num">7 лет</div>
+      <div class="lbl">гарантия на асфальтовое покрытие</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="container">
+    <div class="section-head">
+      <h2>Что мы <span>строим</span></h2>
+      <p>Полный цикл — от проекта и геодезии до укладки асфальта и разметки</p>
+    </div>
+
+    <div class="services-grid">
+
+      <div class="service">
+        <div class="service-icon">🛣</div>
+        <h3>Федеральные трассы</h3>
+        <p>Строительство и реконструкция дорог I–II категории. Работаем по контрактам с госзаказчиком и по частным проектам.</p>
+      </div>
+
+      <div class="service">
+        <div class="service-icon">🏙</div>
+        <h3>Городские магистрали</h3>
+        <p>Улицы, развязки, тротуары, велодорожки. Укладываем покрытие без перекрытия движения на весь день.</p>
+      </div>
+
+      <div class="service">
+        <div class="service-icon">🏭</div>
+        <h3>Промышленные площадки</h3>
+        <p>Подъездные пути, бетонные площадки, внутризаводские дороги. С учётом нагрузок от тяжёлой техники.</p>
+      </div>
+
+      <div class="service">
+        <div class="service-icon">🌉</div>
+        <h3>Мосты и путепроводы</h3>
+        <p>Проектирование и монтаж мостовых конструкций, опор, деформационных швов и барьерных ограждений.</p>
+      </div>
+
+      <div class="service">
+        <div class="service-icon">⚙️</div>
+        <h3>Асфальтобетонные заводы</h3>
+        <p>Четыре собственных завода. Производим смеси под климат и нагрузку конкретного участка.</p>
+      </div>
+
+      <div class="service">
+        <div class="service-icon">🔧</div>
+        <h3>Ремонт и содержание</h3>
+        <p>Ямочный ремонт, замена покрытия, разметка, обустройство. Постоянные контракты на содержание трасс.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="strip" id="cta">
+  <div>
+    <h2>Пришлите ТЗ — рассчитаем стоимость за 2 дня</h2>
+    <p>Оценим объём, сроки и технику. Если проект не наш профиль — честно скажем и подскажем, к кому обратиться.</p>
+  </div>
+  <a href="#" class="btn">Оставить заявку</a>
+</section>
+
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <span>© 2026 EngineersPiece. Строительство дорог и дорожной инфраструктуры.</span>
+    <div class="footer-links">
+      <a href="#">Документы</a>
+      <a href="#">Лицензии</a>
+      <a href="#">Контакты</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
